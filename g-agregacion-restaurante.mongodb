@@ -1,4 +1,0 @@
-db.restaurants.aggregate([
-  { $match: { borough: "Kings" } },
-  { $group: { _id: null, count: { $sum: 1 } } },
-]);

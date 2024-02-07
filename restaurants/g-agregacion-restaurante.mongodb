@@ -1,0 +1,11 @@
+use("sample_restaurants");
+
+//Determine el número total de restaurantes en el barrio 'Kings'.
+
+db.restaurants.aggregate([
+  { $match: { borough: "Kings" } },
+  { $group: { _id: "$restaurant_id" } },
+  { $group: { _id: null, count: { $sum: 1 } } },
+]);
+
+db.restaurants.find({ borough: /Kings/i });

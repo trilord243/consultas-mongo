@@ -1,5 +1,7 @@
 use("sample_restaurants");
 
+//Identifique el top cinco de códigos postales con la mayor cantidad de restaurantes italianos.
+
 db.restaurants.aggregate([
   { $match: { cuisine: "Italian" } },
   { $group: { _id: "$address.zipcode", count: { $sum: 1 } } },
