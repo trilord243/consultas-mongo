@@ -1,0 +1,7 @@
+use("sample_mflix");
+
+db.movies.find({
+  "awards.nominations": { $gt: 3 },
+  languages: { $in: ["Korean", "Japanese", "Mandarin"] },
+  "tomatoes.viewer.numReviews": { $lt: 50 },
+});

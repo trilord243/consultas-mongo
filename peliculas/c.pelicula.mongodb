@@ -1,0 +1,9 @@
+use("sample_mflix");
+
+db.movies.find({
+  genres: { $all: ["Thriller", "Romance"] },
+  "imdb.rating": { $gt: 7 },
+  "tomatoes.viewer.numReviews": { $lt: 500 },
+  writers: { $exists: true, $size: 2 },
+  runtime: { $gt: 80 },
+});

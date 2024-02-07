@@ -1,0 +1,8 @@
+use("sample_mflix");
+
+db.movies.find({
+  "imdb.rating": { $gt: 8 },
+  "tomatoes.viewer.numReviews": { $lt: 1000 },
+  languages: { $in: ["French", "German"] },
+  runtime: { $gt: 70 },
+});
