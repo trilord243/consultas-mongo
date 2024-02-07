@@ -1,0 +1,12 @@
+use("sample_restaurants");
+
+/* Buscar todos los restaurantes de cocina (cuisine) japonesa en el barrio
+(borough) de Manhattan que hayan recibido al menos una calificación
+(grade) de 'C' con una puntuación (score) entre 20 y 30.
+ */
+
+db.restaurants.find({
+  cuisine: "Japanese",
+  borough: "Manhattan",
+  grades: { $elemMatch: { grade: "C", score: { $gte: 20, $lte: 30 } } },
+});

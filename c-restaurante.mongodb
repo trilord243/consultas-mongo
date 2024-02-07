@@ -1,0 +1,13 @@
+use("sample_restaurants");
+
+/* Encuentre todos los restaurantes en el barrio (borough) de Queens, con
+código postal (address.zipcode) 11377, cuyo nombre (name) contenga
+'Pizza', y que no hayan recibido una calificación(grade) de 'A' con una
+puntuación(score) inferior a 10. */
+
+db.restaurants.find({
+  borough: "Queens",
+  "address.zipcode": "11377",
+  name: /Pizza/,
+  grades: { $not: { $elemMatch: { grade: "A", score: { $lt: 10 } } } },
+});

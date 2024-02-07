@@ -1,0 +1,9 @@
+use("sample_restaurants");
+
+/* Buscar restaurantes que NO sean de cocina (cuisine) china y que hayan
+recibido alguna calificación (grade) inferior a 'C' */
+
+db.restaurants.find({
+  cuisine: { $ne: "Chinese" },
+  grades: { $elemMatch: { grade: { $lt: "C" } } },
+});

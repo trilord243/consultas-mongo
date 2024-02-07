@@ -1,0 +1,15 @@
+use("sample_restaurants");
+
+/* Encuentre todos los restaurantes (excepto de comida rápida ‘Fast Food’)
+ubicados en las calles (address.street ) que contienen 'Avenue' y en códigos
+postales (address.zipcode) desde 10000 hasta 10019, que hayan recibido
+calificaciones (grade) 'B' o 'C' con una puntuación (score) entre 20 y 35. */
+
+db.restaurants.find({
+  cuisine: { $ne: "Fast Food" },
+  "address.street": /Avenue/,
+  "address.zipcode": { $gte: "10000", $lte: "10019" },
+  grades: {
+    $elemMatch: { grade: { $in: ["B", "C"] }, score: { $gte: 20, $lte: 35 } },
+  },
+});
