@@ -1,0 +1,17 @@
+/* Determine los 5 directores cuyas películas tienen la calificación promedio más alta en IMDb, considerando solo a aquellos directores con al menos 5 películas. Ordenar por calificación más alta. */
+
+use("sample_mflix");
+db.movies.aggregate([
+  { $match: { directors: { $exists: true, $ne: [] } } },
+  { $unwind: "$directors" },
+  {
+    $group: {
+      _id: "$directors",
+      averageRating: { $avg: "$imdb.rating" },
+      count: { $sum: 1 },
+    },
+  },
+  { $match: { count: { $gte: 5 } } },
+  { $sort: { averageRating: -1 } },
+  { $limit: 5 },
+]);

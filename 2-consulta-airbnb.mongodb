@@ -1,0 +1,6 @@
+use("sample_airbnb");
+db.listingsAndReviews.find({
+  amenities: "Wifi",
+  "address.market": "Barcelona",
+  accommodates: { $gte: 2 },
+});

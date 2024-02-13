@@ -1,0 +1,18 @@
+use("sample_mflix");
+
+/* Identificar los 5 géneros principales de películas que tienen una duración media superior a 90 minutos y calificaciones en IMDb entre 5 y 8. Deben ser ordenados por el número total de películas en cada género y, en caso de empate, por la duración promedio. */
+
+db.movies.aggregate([
+  { $match: { "imdb.rating": { $gte: 5, $lte: 8 }, runtime: { $gt: 90 } } },
+  { $unwind: "$genres" },
+  {
+    $group: {
+      _id: "$genres",
+      averageRuntime: { $avg: "$runtime" },
+      count: { $sum: 1 },
+    },
+  },
+  { $match: { averageRuntime: { $gt: 90 } } },
+  { $sort: { count: -1, averageRuntime: -1 } },
+  { $limit: 5 },
+]);

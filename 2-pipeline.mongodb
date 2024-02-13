@@ -1,0 +1,18 @@
+use("sample_airbnb");
+db.listingsAndReviews.aggregate([
+  {
+    $match: {
+      "address.market": "Barcelona",
+      amenities: "Wifi",
+      "review_scores.cleanliness": { $exists: true }, // Asegura que solo se incluyan alojamientos con calificación de limpieza
+    },
+  },
+  {
+    $group: {
+      _id: null,
+      totalListings: { $sum: 1 },
+      averageRating: { $avg: "$review_scores.review_scores_rating" },
+      averageCleanliness: { $avg: "$review_scores.cleanliness" }, // Ahora debería calcular correctamente
+    },
+  },
+]);

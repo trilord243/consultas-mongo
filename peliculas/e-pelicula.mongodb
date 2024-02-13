@@ -1,0 +1,17 @@
+/* Identifique los 3 países con la mayor cantidad de películas producidas, mostrando también la calificación promedio de IMDb para las películas de cada país.
+ */
+use("sample_mflix");
+
+db.movies.aggregate([
+  { $match: { countries: { $exists: true, $ne: [] } } },
+  { $unwind: "$countries" },
+  {
+    $group: {
+      _id: "$countries",
+      averageRating: { $avg: "$imdb.rating" },
+      count: { $sum: 1 },
+    },
+  },
+  { $sort: { count: -1 } },
+  { $limit: 3 },
+]);

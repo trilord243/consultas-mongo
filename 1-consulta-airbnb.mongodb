@@ -1,0 +1,9 @@
+use("sample_airbnb");
+
+db.listingsAndReviews.find({
+  $and: [
+    { bedrooms: { $gte: 1 } },
+    { amenities: { $in: ["Pets allowed", "Pet Friendly"] } },
+    { price: { $gte: 50, $lte: 150 } },
+  ],
+});
